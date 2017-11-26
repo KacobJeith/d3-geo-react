@@ -8,11 +8,13 @@ With the raw SVG exposed like this, you have easy access to insert function hand
 
 # Running
 
->> git clone https://github.com/KacobJeith/d3-geo-react
->> cd d3-geo-react
->> npm install 
->> npm run bs
+```
+> git clone https://github.com/KacobJeith/d3-geo-react
+> cd d3-geo-react
+> npm install 
+> npm run bs
+```
 
-go to localhost:5000
+go to localhost:5000 in your browser to see the output. 
 
 enjoy!
