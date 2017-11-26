@@ -1,0 +1,55 @@
+{
+  "name": "d3-geo-react",
+  "version": "1.0.0",
+  "description": "A bare bones d3 map implemented in react",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "firebase serve",
+    "bs": "webpack && firebase serve",
+    "deploy": "webpack && firebase deploy --only hosting"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KacobJeith/d3-geo-react.git"
+  },
+  "keywords": [
+    "d3",
+    "react",
+    "webpack",
+    "firebase",
+    "redux",
+    "svg"
+  ],
+  "author": "KacobJeith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KacobJeith/d3-geo-react/issues"
+  },
+  "homepage": "https://github.com/KacobJeith/d3-geo-react#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "immutable": "^3.8.2",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "d3-geo": "^1.9.0",
+    "firebase": "^4.6.2",
+    "react": "^16.1.1"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  }
+}
