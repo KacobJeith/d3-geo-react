@@ -9,7 +9,8 @@ import DrawState from './DrawState.jsx'
 
 const mapStateToProps = (state) => ({
   markers: state.markers,
-  USStates: state.USStates
+  USStates: state.USStates,
+  swarmData: state.swarmData
 })
 
 class USAMap extends Component {
@@ -27,20 +28,23 @@ class USAMap extends Component {
                       key={"state" + state}/>);
       }
     }
-
-    var markers = [];
-
-    for (var city in this.props.markers) {
-      markers.push(<LocationMarker 
-                    city={this.props.markers[city]}
-                    index={city}
-                    key={"city" + city}/>);
-    }
     
     return (
       <svg width={ 960 } height={ 600 } viewBox="0 0 960 600">
-        <g>{states}</g>
-        <g>{markers}</g>
+        <g>{this.props.USStates.features.map((stateData, index) => (
+            <DrawState 
+              state={stateData}
+              key={"state" + index}/>
+          ))}
+        </g>
+        <g>{this.props.swarmData.features.map((checkin, index) => (
+          <LocationMarker 
+            rawData={checkin}
+            coordinates={checkin.geometry.coordinates}
+            name={checkin.properties.Name}
+            key={checkin.properties.Name + index}/>
+        ))}
+        </g>
       </svg>
     )
   }

@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../redux/actions'
 import { withRouter } from 'react-router-dom'
-import { geoAlbersUsa } from "d3-geo"
+import { geoAlbersUsa, geoMercator, geoOrthographic } from "d3-geo"
 
 const mapStateToProps = (state, ownProps) => ({
-  city: ownProps.city,
-  projection: ownProps.projection,
-  index: ownProps.index
+  city: ownProps.rawData,
+  coordinates: ownProps.coordinates,
+  name: ownProps.name
 })
 
 class LocationMarker extends Component {
@@ -23,7 +23,7 @@ class LocationMarker extends Component {
 
   componentDidMount() {
 
-    var reversedCoordinates = this.props.city.coordinates.reverse();
+    var reversedCoordinates = this.props.coordinates;
     var projectedLocation = this.projection()(reversedCoordinates);
 
     this.setState({position: projectedLocation})
@@ -31,11 +31,11 @@ class LocationMarker extends Component {
   }
 
   handleMarkerClick() {
-    console.log("Clicked a Location! ", this.props.city.name);
+    console.log("Clicked a Location! ", this.props.name);
   }
 
   projection() {
-    return geoAlbersUsa()
+    return geoOrthographic()
       .translate([ 960 / 2, 600 / 2 ])
   }
 
@@ -53,7 +53,7 @@ class LocationMarker extends Component {
         },
         cx: this.state.position[0],
         cy: this.state.position[1],
-        r: this.props.city.games, 
+        r: 3, 
         fill: this.state.hover ? "#ff0fd3" : "#f9a7ea",
         stroke: "#FFFFFF",
         onClick: () => this.handleMarkerClick(), 

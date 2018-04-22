@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../redux/actions'
 import { withRouter } from 'react-router-dom'
-import {geoAlbersUsa, geoPath} from "d3-geo"
+import {geoAlbersUsa, geoMercator, geoOrthographic, geoPath} from "d3-geo"
 
 const mapStateToProps = (state, ownProps) => ({
   state: ownProps.state,
@@ -23,7 +23,7 @@ class DrawState extends Component {
   }
 
   projection() {
-    return geoAlbersUsa()
+    return geoOrthographic()
       .translate([ 960 / 2, 600 / 2 ])
   }
 
