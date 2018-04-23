@@ -15,19 +15,22 @@ const mapStateToProps = (state) => ({
 
 class USAMap extends Component {
 
+  componentDidMount() {
+
+    var rotate = [10, 0];
+    var velocity = [.003, 0];
+    var time  = Date.now();
+
+    var rotateRef = setInterval(() => {
+      var dt = Date.now() - time;
+      this.props.spinProjection([rotate[0] + velocity[0] * dt, rotate[1] + velocity[1] * dt])
+    }, 100);
+  }
+
   render() {
     console.log(this.props.markers);
 
     var states = [];
-
-    if (this.props.USStates.features) {
-      for (var state in this.props.USStates.features) {
-        states.push(<DrawState 
-                      state={this.props.USStates.features[state]}
-                      index={state}
-                      key={"state" + state}/>);
-      }
-    }
     
     return (
       <svg width={ 960 } height={ 600 } viewBox="0 0 960 600">

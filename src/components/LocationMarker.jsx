@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as Actions from '../redux/actions'
 import { withRouter } from 'react-router-dom'
-import { geoAlbersUsa, geoMercator, geoOrthographic } from "d3-geo"
+import { geoAlbersUsa, geoMercator, geoOrthographic, geoDistance } from "d3-geo"
 
 const mapStateToProps = (state, ownProps) => ({
   city: ownProps.rawData,
   coordinates: ownProps.coordinates,
-  name: ownProps.name
+  name: ownProps.name,
+  shouldUpdate: state.update,
+  projection: state.projection
 })
 
 class LocationMarker extends Component {
@@ -21,22 +23,23 @@ class LocationMarker extends Component {
     }
   }
 
-  componentDidMount() {
-
-    var reversedCoordinates = this.props.coordinates;
-    var projectedLocation = this.projection()(reversedCoordinates);
-
-    this.setState({position: projectedLocation})
-
-  }
-
   handleMarkerClick() {
     console.log("Clicked a Location! ", this.props.name);
   }
 
-  projection() {
-    return geoOrthographic()
-      .translate([ 960 / 2, 600 / 2 ])
+  isVisible() {
+    var geoangle = geoDistance(this.props.coordinates,
+            [
+                -this.props.projection.rotate()[0],
+                this.props.projection.rotate()[1]
+            ]);
+
+    if (geoangle > 1.57079632679490)
+    {
+        return 0;
+    } else {
+        return 1;
+    }
   }
 
   render() {
@@ -51,10 +54,11 @@ class LocationMarker extends Component {
         style: {
           cursor: "pointer"
         },
-        cx: this.state.position[0],
-        cy: this.state.position[1],
+        cx: this.props.projection(this.props.coordinates)[0],//this.props.position[0],
+        cy: this.props.projection(this.props.coordinates)[1],
         r: 3, 
         fill: this.state.hover ? "#ff0fd3" : "#f9a7ea",
+        opacity: this.isVisible(),
         stroke: "#FFFFFF",
         onClick: () => this.handleMarkerClick(), 
         onMouseEnter: () => this.setState({hover: true}),

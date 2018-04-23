@@ -5,7 +5,7 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
  module.exports = merge(common, {
-   mode: 'production',
+   mode: 'development',
 
    output: {
      filename: '[name].[hash].bundle.js',

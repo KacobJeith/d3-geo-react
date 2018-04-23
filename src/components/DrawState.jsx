@@ -7,7 +7,9 @@ import {geoAlbersUsa, geoMercator, geoOrthographic, geoPath} from "d3-geo"
 
 const mapStateToProps = (state, ownProps) => ({
   state: ownProps.state,
-  index: ownProps.index
+  index: ownProps.index,
+  projection: state.projection,
+  shouldUpdate: state.update
 })
 
 class DrawState extends Component {
@@ -22,11 +24,6 @@ class DrawState extends Component {
     console.log("Clicked a State! ", this.props.state.properties.NAME);
   }
 
-  projection() {
-    return geoOrthographic()
-      .translate([ 960 / 2, 600 / 2 ])
-  }
-
   render() {
 
     var inputs = {
@@ -35,7 +32,7 @@ class DrawState extends Component {
           cursor: "default"
         },
         key: `path-${ this.props.index }`,
-        d: geoPath().projection(this.projection())(this.props.state),
+        d: geoPath().projection(this.props.projection)(this.props.state),
         fill: this.state.hover ? "#7a7a7a" : "#474747", 
         stroke: "#FFFFFF",
         strokeWidth: 0.5, 
